@@ -3,7 +3,7 @@ import Fluent
 import FluentPostgresDriver
 import Vapor
 
-// configures your application
+// configures the application
 public func configure(_ app: Application) async throws {
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
@@ -17,8 +17,10 @@ public func configure(_ app: Application) async throws {
         tls: .prefer(try .init(configuration: .clientDefault)))
     ), as: .psql)
 
-    app.migrations.add(CreateTodo())
+    // MARK: - Migrations
+    app.migrations.add(TicketMigration())
 
+    // MARK: - Routes
     // register routes
     try routes(app)
 }
